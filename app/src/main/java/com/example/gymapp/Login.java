@@ -3,6 +3,7 @@ package com.example.gymapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,7 +11,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +28,7 @@ public class Login extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPass;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference usersRef = db.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,34 +40,77 @@ public class Login extends AppCompatActivity {
 
     }
 
-
-
-
-
-
     // code currently made to register
     public void login(View v){
-        String email = editTextEmail.getText().toString();
-        String pass = editTextPass.getText().toString();
+        String emailEntry = editTextEmail.getText().toString();
+        final String passEntry = editTextPass.getText().toString();
+       // String pass = "";
 
-        Map<String, Object> user = new HashMap<>();
-        user.put(KEY_EMAIL, email);
-        user.put(KEY_PASS, pass);
-
-        db.collection("users").document("user123").set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        usersRef.whereEqualTo("email", emailEntry)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(Login.this, "Success", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+
+                           // String email = documentSnapshot.getString(KEY_EMAIL);
+                            String pass = documentSnapshot.getString(KEY_PASS);
+
+                            if(pass.equals(passEntry)){
+                                Toast.makeText(Login.this, "Logging in success", Toast.LENGTH_SHORT).show();
+
+                                Intent goMain = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(goMain);
+                            }
+                            else {
+                                Toast.makeText(Login.this, "No Bueno", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Login.this, "Failure", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+
+    public void logins(View v){
+        // String email = editTextEmail.getText().toString();
+        // String pass = editTextPass.getText().toString();
+
+        db.collection("users").document("user123")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()){
+                            String email = documentSnapshot.getString(KEY_EMAIL);
+                            String pass = documentSnapshot.getString(KEY_PASS);
+
+                            System.out.println("Test values here: email =" + email + ", pass = " + pass);
+
+                        }
+                        else{
+                            Toast.makeText(Login.this, "user dont exits", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
                     }
                 });
 
+    }
+
+    public void goToRegister(View view){
+        Intent goReg = new Intent(getApplicationContext(), Register.class);
+        startActivity(goReg);
     }
 
 

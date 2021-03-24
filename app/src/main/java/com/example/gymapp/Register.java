@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -22,6 +24,7 @@ public class Register extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPass;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference usersRef = db.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class Register extends AppCompatActivity {
         editTextPass = findViewById(R.id.passEntry2);
     }
 
-    public void login(View v){
+    public void register(View v){
         String email = editTextEmail.getText().toString();
         String pass = editTextPass.getText().toString();
 
@@ -40,19 +43,12 @@ public class Register extends AppCompatActivity {
         user.put(KEY_EMAIL, email);
         user.put(KEY_PASS, pass);
 
-        db.collection("users").document("user123").set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(Register.this, "Success", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Register.this, "Failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+
+        usersRef.add(user);
+
+
+
 
     }
 }
