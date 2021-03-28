@@ -10,6 +10,15 @@ public class classData {
     public int capacity;
     public int attendees;
 
+    classData(String name, String date, String time, String length, int capacity, int attendees){
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.length = length;
+        this.capacity = capacity;
+        this.attendees = attendees;
+    }
+
     classData(){
 
     }
