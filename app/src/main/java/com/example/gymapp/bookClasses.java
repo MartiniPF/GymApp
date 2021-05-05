@@ -36,7 +36,6 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
     private CollectionReference classRef = db.collection("classes");
     private TextView testText;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +47,6 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
-
-      //  loadAll();
-
-       // classList.add(new classData("line", "as","df","dff",12,1));
-        //loadAll();
-
-        System.out.println(classList);
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -69,10 +60,19 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
         String text = parent.getItemAtPosition(position).toString();
         System.out.println("Spinner activated: " + text);
 
-        loaders(text);
+        testText.setText("");
+        if(position > 0) {
+
+            loadQuery(text);
+        }
+        else {
+
+            System.out.println("show all");
+            loadAll();
+        }
     }
 
-    public void loaders(String s){
+    public void loadQuery(String s){
 
         classList.clear();
 
@@ -87,7 +87,6 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
 
                     classData classData = documentSnapshot.toObject(com.example.gymapp.classData.class);
-
                     String name = classData.getName();
                     String date = classData.getDate();
                     String time = classData.getTime();
@@ -98,14 +97,10 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
                     data += "Name: " + name + "\nDate: " +  date + "\nTime " + time + "\nLength: " + length
                             + "\nCapacity: " + capacity + "\nAttendees: " + attendees;
 
-                    //System.out.println(data);
                     classList.add(new classData(name, date, time, length, capacity, attendees));
-                    testText.setText(data);
-
                 }
 
                 mAdapter = new classesAdapter(classList);
-
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(new classesAdapter.OnItemClickListener() {
@@ -113,12 +108,28 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
                     public void onItemClick(int position) {
 
                         System.out.println("Position: " + position);
+                        dataToString(position);
+
                     }
                 });
             }
         });
-        System.out.println("array at end of on start method: " + classList);
+    }
 
+    public void dataToString(int position){
+
+        String data = "";
+        String name = classList.get(position).getName();
+        String date = classList.get(position).getDate();
+        String time = classList.get(position).getTime();
+        String length = classList.get(position).getLength();
+        int capacity = classList.get(position).getCapacity();
+        int attendees = classList.get(position).getAttendees();
+
+        data = "Name: " + name + "\nDate: " +  date + "\nTime " + time + "\nLength: " + length
+                + "\nCapacity: " + capacity + "\nAttendees: " + attendees;
+
+        testText.setText(data);
     }
 
     @Override
@@ -148,12 +159,9 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
 
                     //System.out.println(data);
                     classList.add(new classData(name, date, time, length, capacity, attendees));
-                    testText.setText(data);
-
                 }
 
                 mAdapter = new classesAdapter(classList);
-
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(new classesAdapter.OnItemClickListener() {
@@ -161,18 +169,17 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
                     public void onItemClick(int position) {
 
                         System.out.println("Position: " + position);
+                        dataToString(position);
                     }
                 });
             }
         });
-        System.out.println("array at end of on start method: " + classList);
     }
 
-    public void loadAll(View v){
+    public void loadAll(){
 
         classList.clear();
-
-        classRef.whereEqualTo("name", "running").addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+        classRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(e != null){
@@ -196,12 +203,9 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
 
                     //System.out.println(data);
                     classList.add(new classData(name, date, time, length, capacity, attendees));
-                    testText.setText(data);
-
                 }
 
                 mAdapter = new classesAdapter(classList);
-
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(new classesAdapter.OnItemClickListener() {
@@ -209,20 +213,16 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
                     public void onItemClick(int position) {
 
                         System.out.println("Position: " + position);
+
+                        dataToString(position);
                     }
                 });
             }
         });
-        System.out.println("array at end of on start method: " + classList);
-
-
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent){
 
     }
-
-
 }
