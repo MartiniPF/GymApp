@@ -2,6 +2,7 @@ package com.example.gymapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        ImageAdapter adapter = new ImageAdapter(this);
+        viewPager.setAdapter(adapter);
+
+
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.botNav);
-        bottomNavigationView.setSelectedItemId(R.id.item1);
+        bottomNavigationView.setSelectedItemId(R.id.item1); // create onResume method and copy this line of code to it (stops wrong selected item bug when user uses phones back button)
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -39,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
     }
 
