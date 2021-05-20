@@ -10,7 +10,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 public class ImageAdapter extends PagerAdapter {
     private Context mContext;
-    private int[] mImageIds = new int[] {R.drawable.ramenavatar}; // gallery images go here
+    private int[] mImageIds = new int[] {R.drawable.gymtreadmills, R.drawable.gymlockers}; // gallery images go here
 
     ImageAdapter(Context context){
         mContext = context;
