@@ -69,10 +69,14 @@ public class tabnewex extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int repNo = Integer.parseInt(reps.getText().toString());
+                int weightNo = Integer.parseInt(weight.getText().toString());
+
                 Map<String, Object> exercise = new HashMap<>();
                 exercise.put("exname", exname.getText().toString());
-                exercise.put("weight", weight.getText().toString());
-                exercise.put("reps", reps.getText().toString());
+                exercise.put("weight", weightNo);
+                exercise.put("reps", repNo);
                 exercise.put("date", date.getText().toString());
 
                System.out.println("this is it here: " + exname.getText().toString());

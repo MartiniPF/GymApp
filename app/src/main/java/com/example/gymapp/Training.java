@@ -53,9 +53,7 @@ public class Training extends AppCompatActivity {
 
         pagerAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
 
 
         // bottom nav
@@ -85,16 +83,5 @@ public class Training extends AppCompatActivity {
 
     }
 
-   // public void saveStuff(View view){
-       // final String exname1 = exname.getText().toString();
-        //final String date1 = date.getText().toString();
-        // final String weight1 = weight.getText().toString();
-        // final String reps1 = weight.getText().toString();
 
-
-
-
-
-
-  //  }
 }

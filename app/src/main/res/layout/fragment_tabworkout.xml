@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFC107"
     tools:context=".tabworkout">
 
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/workoutList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#EE0000"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>
