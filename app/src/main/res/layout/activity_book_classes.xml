@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/carbonbg"
     tools:context=".bookClasses">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="383dp"
-        android:background="#009688"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -34,7 +35,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.101">>
+        app:layout_constraintVertical_bias="0.132">>
 
         <TextView
             android:id="@+id/testText"
@@ -43,21 +44,23 @@
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="visible" />
     </androidx.cardview.widget.CardView>
 
     <Spinner
         android:id="@+id/spinnerClasses"
         android:layout_width="144dp"
         android:layout_height="41dp"
-        android:spinnerMode="dropdown"
+        android:background="@drawable/searchbar3"
+        android:spinnerMode="dialog"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.352" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/botNav"
@@ -70,4 +73,15 @@
         app:layout_constraintVertical_bias="1.0"
 
         app:menu="@menu/bottom_menu" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.464" />
 </androidx.constraintlayout.widget.ConstraintLayout>
