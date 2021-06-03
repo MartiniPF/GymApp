@@ -60,6 +60,10 @@ public class bookClasses extends AppCompatActivity implements AdapterView.OnItem
                        // startActivity(new Intent(getApplicationContext(), bookClasses.class));
                         return true;
 
+                    case R.id.item3:
+                        startActivity(new Intent(getApplicationContext(), Training.class));
+                        return true;
+
                 }
                 return false;
             }

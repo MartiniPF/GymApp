@@ -82,7 +82,7 @@ public class Register extends AppCompatActivity {
                 });
 
     }
-
+    // useless unused code?
     public void register(View v){
 
         String email = editTextEmail.getText().toString();
