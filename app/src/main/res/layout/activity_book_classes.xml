@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/carbonbg"
+    android:background="#9C27B0"
     tools:context=".bookClasses">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -52,7 +52,6 @@
         android:id="@+id/spinnerClasses"
         android:layout_width="144dp"
         android:layout_height="41dp"
-        android:background="@drawable/searchbar3"
         android:spinnerMode="dialog"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

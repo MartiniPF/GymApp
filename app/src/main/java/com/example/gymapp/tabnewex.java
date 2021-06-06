@@ -41,7 +41,7 @@ public class tabnewex extends Fragment {
     private EditText reps;
     private Button saveBtn;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference exRef = db.collection("users").document("6ulCSe9sQpWhaHQy6xuP").collection("ex1");
+    private CollectionReference exRef = db.collection("users").document("testuser").collection("ex1");
 
 
 

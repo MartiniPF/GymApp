@@ -30,9 +30,10 @@ import javax.annotation.Nullable;
 public class tabworkout extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference exRef = db.collection("users").document("6ulCSe9sQpWhaHQy6xuP").collection("ex1");
+    private CollectionReference exRef = db.collection("users").document("testuser").collection("ex1");
     private RecyclerView mRecyclerView;
-
+    private workoutAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<exerciseData> exerciseList = new ArrayList<>();
 
 
@@ -49,6 +50,7 @@ public class tabworkout extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tabworkout, container, false);
         mRecyclerView = view.findViewById(R.id.workoutList);
         mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
 
 
         loadQuery("03/06/2021");
@@ -81,9 +83,22 @@ public class tabworkout extends Fragment {
                      int reps = ed.getReps();
 
                      exerciseList.add(new exerciseData(exname, date, weight, reps));
-                     System.out.println(exerciseList);
+                     System.out.println("THIS IS ARRAY: " + exerciseList);
 
                 }
+
+                mAdapter = new workoutAdapter(exerciseList);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnItemClickListener(new workoutAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+
+                        System.out.println("Position: " + position);
+                        //dataToString(position);
+
+                    }
+                });
 
 
             }
