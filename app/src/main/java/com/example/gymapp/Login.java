@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,11 +25,13 @@ public class Login extends AppCompatActivity {
 
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASS = "pass";
+    public static final String SHARED_PREFS = "sharedPrefs";
 
     private EditText editTextEmail;
     private EditText editTextPass;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = db.collection("users");
+    String emailEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class Login extends AppCompatActivity {
 
     // code currently made to register
     public void login(View v){
-        String emailEntry = editTextEmail.getText().toString();
+        emailEntry = editTextEmail.getText().toString();
         final String passEntry = editTextPass.getText().toString();
        // String pass = "";
 
@@ -60,13 +63,24 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Logging in success", Toast.LENGTH_SHORT).show();
 
                                 Intent goMain = new Intent(getApplicationContext(), MainActivity.class);
+                                goMain.putExtra("email", emailEntry);
                                 startActivity(goMain);
+
+                                SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("emailID", emailEntry);
+                                editor.apply();
+
+
+
+
                             }
                             else {
                                 Toast.makeText(Login.this, "No Bueno", Toast.LENGTH_SHORT).show();
                             }
                         }
 
+                        System.out.println("DOC ID HERE: " + usersRef.document());
 
                     }
                 })

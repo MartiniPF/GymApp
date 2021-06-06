@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_event_note_black_24dp"
         android:id="@+id/item2"/>
 
-    <item android:title="Settings"
-        android:icon="@drawable/ic_settings_black_24dp"
+    <item android:title="My Workouts"
+        android:icon="@drawable/ic_fitness_center_black_24dp"
         android:id="@+id/item3"/>
 </menu>

@@ -1,6 +1,7 @@
 package com.example.gymapp;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,9 @@ import java.util.concurrent.Executor;
 
 import javax.annotation.Nullable;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.gymapp.Login.SHARED_PREFS;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +45,7 @@ public class tabnewex extends Fragment {
     private EditText reps;
     private Button saveBtn;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference exRef = db.collection("users").document("testuser").collection("ex1");
+    private CollectionReference exRef = db.collection("users");
 
 
 
@@ -63,6 +67,10 @@ public class tabnewex extends Fragment {
         reps = view.findViewById(R.id.textReps);
         saveBtn = view.findViewById(R.id.saveBtn);
 
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        final String texty = sharedPreferences.getString("emailID",""); // default value MUST be blank incase user is starting app for first time
+        System.out.println("SHARED PREFS frag: " + texty);
+
        // String exname1 = exname.getText().toString();
        // System.out.println("this is it: " + exname1);
 
@@ -82,7 +90,7 @@ public class tabnewex extends Fragment {
                System.out.println("this is it here: " + exname.getText().toString());
 
 
-                exRef.document().set(exercise).addOnSuccessListener(new OnSuccessListener<Void>() {
+                exRef.document(texty).collection("ex1").document().set(exercise).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
 

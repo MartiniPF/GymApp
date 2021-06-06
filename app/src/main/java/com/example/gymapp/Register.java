@@ -63,7 +63,8 @@ public class Register extends AppCompatActivity {
                             user.put(KEY_EMAIL, email);
                             user.put(KEY_PASS, pass);
 
-                            usersRef.add(user);
+                            db.collection("users").document(email).set(user);
+                            //usersRef.add(user);
 
                             Toast.makeText(Register.this, "work", Toast.LENGTH_SHORT).show();
                         }

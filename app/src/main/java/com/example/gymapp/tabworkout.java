@@ -1,6 +1,7 @@
 package com.example.gymapp;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,9 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.gymapp.Login.SHARED_PREFS;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,11 +34,12 @@ import javax.annotation.Nullable;
 public class tabworkout extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference exRef = db.collection("users").document("testuser").collection("ex1");
+    private CollectionReference exRef = db.collection("users");
     private RecyclerView mRecyclerView;
     private workoutAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<exerciseData> exerciseList = new ArrayList<>();
+
 
 
 
@@ -53,6 +58,8 @@ public class tabworkout extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
 
 
+
+
         loadQuery("03/06/2021");
 
 
@@ -68,7 +75,11 @@ public class tabworkout extends Fragment {
 
     public void loadQuery(String s){
 
-        exRef.whereEqualTo("date", s).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String texty = sharedPreferences.getString("emailID",""); // default value MUST be blank incase user is starting app for first time
+        System.out.println("SHARED PREFS frag: " + texty);
+
+        exRef.document(texty).collection("ex1").whereEqualTo("date", s).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 

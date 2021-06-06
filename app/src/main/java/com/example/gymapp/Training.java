@@ -55,6 +55,8 @@ public class Training extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        final String email = getIntent().getStringExtra("email");
+
 
         // bottom nav
         BottomNavigationView bottomNavigationView = findViewById(R.id.botNav);
