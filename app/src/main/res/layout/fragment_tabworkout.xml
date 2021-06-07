@@ -29,12 +29,20 @@
                 <Spinner
                     android:id="@+id/monthSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog" />
 
                 <Spinner
                     android:id="@+id/yearSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog" />
+
+                <Button
+                    android:id="@+id/loadWorkoutBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Load workout" />
             </TableRow>
 
         </TableLayout>
