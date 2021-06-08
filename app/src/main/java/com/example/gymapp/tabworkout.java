@@ -199,7 +199,7 @@ public class tabworkout extends Fragment {
         String texty = sharedPreferences.getString("emailID",""); // default value MUST be blank incase user is starting app for first time
         System.out.println("SHARED PREFS frag: " + texty);
 
-        exRef.document(texty).collection("ex1").whereEqualTo("date", s).orderBy("date", Query.Direction.DESCENDING)
+        exRef.document(texty).collection("ex1").whereEqualTo("date", s).orderBy("exname", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
