@@ -20,6 +20,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -84,6 +85,7 @@ public class tabworkout extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 daytext = parent.getItemAtPosition(position).toString();
+                exerciseList.clear();
             }
 
             @Override
@@ -98,6 +100,7 @@ public class tabworkout extends Fragment {
         spinnerMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                exerciseList.clear();
 
                 String holder = parent.getItemAtPosition(position).toString();
                 switch(holder){
@@ -164,6 +167,7 @@ public class tabworkout extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 yeartext = parent.getItemAtPosition(position).toString();
+                exerciseList.clear();
             }
 
             @Override
@@ -176,7 +180,7 @@ public class tabworkout extends Fragment {
         loadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                exerciseList.clear();
+
                 dateEntry = daytext + "/" + monthtext + "/" + yeartext;
                 System.out.println("completed datentry: " + dateEntry);
                 loadQuery(dateEntry);
@@ -190,44 +194,48 @@ public class tabworkout extends Fragment {
 
 
     public void loadQuery(String s){
-
+        exerciseList.clear();
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String texty = sharedPreferences.getString("emailID",""); // default value MUST be blank incase user is starting app for first time
         System.out.println("SHARED PREFS frag: " + texty);
 
-        exRef.document(texty).collection("ex1").whereEqualTo("date", s).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        exRef.document(texty).collection("ex1").whereEqualTo("date", s).orderBy("date", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                    if(e==null) {
 
-                    System.out.println("CHECK THIS: " + documentSnapshot.getData());
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
-                     exerciseData ed = documentSnapshot.toObject(exerciseData.class);
-                     String exname = ed.getExname();
-                     String date = ed.getDate();
-                     int weight = ed.getWeight();
-                     int reps = ed.getReps();
+                            System.out.println("CHECK THIS: " + documentSnapshot.getData());
 
-                     exerciseList.add(new exerciseData(exname, date, weight, reps));
-                     System.out.println("THIS IS ARRAY: " + exerciseList);
+                            exerciseData ed = documentSnapshot.toObject(exerciseData.class);
+                            String exname = ed.getExname();
+                            String date = ed.getDate();
+                            int weight = ed.getWeight();
+                            int reps = ed.getReps();
 
-                }
+                            exerciseList.add(new exerciseData(exname, date, weight, reps));
+                            System.out.println("THIS IS ARRAY: " + exerciseList);
 
-                mAdapter = new workoutAdapter(exerciseList);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(new workoutAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
+                        }
 
-                        System.out.println("Position: " + position);
-                        //dataToString(position);
+                        mAdapter = new workoutAdapter(exerciseList);
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new workoutAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
 
-                    }
-                });
+                                System.out.println("Position: " + position);
+                                //dataToString(position);
+
+                            }
 
 
+                        });
+                    }// if e == null
             }
         });
     }

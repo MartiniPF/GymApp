@@ -99,4 +99,9 @@ public class Register extends AppCompatActivity {
         usersRef.add(user);
 
     }
+
+    public void goToLogin(View view){
+        Intent goLog = new Intent(getApplicationContext(), Login.class);
+        startActivity(goLog);
+    }
 }

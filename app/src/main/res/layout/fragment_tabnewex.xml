@@ -3,51 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
+    android:background="@drawable/gymbg1"
     tools:context=".tabnewex">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/textExercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:ems="10"
             android:hint="Exercise name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+
+            />
 
         <EditText
             android:id="@+id/textDate"
-            android:layout_width="277dp"
-            android:layout_height="87dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:ems="10"
             android:hint="date"
-            android:inputType="date" />
+            android:inputType="date"
+            android:layout_marginBottom="20dp"/>
 
         <EditText
             android:id="@+id/textWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:ems="10"
             android:hint="Weight"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginBottom="20dp"/>
 
         <EditText
             android:id="@+id/textReps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:ems="10"
             android:hint="Reps"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/saveBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:text="Save" />
     </LinearLayout>
 

@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03A9F4"
+    android:background="@drawable/gymbg1"
     tools:context=".Login">
 
     <EditText
         android:id="@+id/emailEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:ems="10"
         android:hint="email"
         android:inputType="textEmailAddress"
@@ -24,6 +25,7 @@
         android:id="@+id/passEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
@@ -35,8 +37,10 @@
 
     <Button
         android:id="@+id/loginBtn"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:onClick="login"
         android:text="Log in"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,6 +52,7 @@
         android:id="@+id/goToRegBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:onClick="goToRegister"
         android:text="Need to register?"
         app:layout_constraintBottom_toBottomOf="parent"
